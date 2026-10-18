@@ -1,0 +1,23 @@
+{
+  "lifi_integrator": "routeopt",
+  "lifi_fee_hex": null,
+  "affiliate_links": {
+    "lifi": "https://li.fi/?fromToken=USDC",
+    "across": "https://across.to",
+    "note": "Replace with real referral/affiliate links when signed up (LI.FI integrator dashboard, Across partner program). fee_hex: set a referral fee in basis points, hex-encoded 18-decimals, to monetize LI.FI-powered swaps."
+  },
+  "paid_tier": {
+    "name": "RouteOpt Alerts+",
+    "price_usd": 9,
+    "per": "month",
+    "includes": [
+      "High-frequency checks (every 15 min, 20+ pairs)",
+      "Private Telegram alerts when spread between cheapest and most expensive provider exceeds a threshold you pick (e.g. 15 bps)",
+      "Arbitrage-style edge digest: which corridor is mispriced today",
+      "No public delay"
+    ],
+    "cta": "DM @RouteOptBot 'alerts' to subscribe",
+    "link": null
+  },
+  "disclaimer": "RouteOpt compares public route data. No custody, no execution, estimates only."
+}

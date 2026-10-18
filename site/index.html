@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RouteOpt — cross-chain route comparison</title>
+<meta name="description" content="Free daily cross-chain route comparison from public data (LI.FI, Across, DeFiLlama). No custody, no execution.">
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 0; background: #0b1220; color: #e6edf3; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { border-bottom: 1px solid #1f2a3a; padding-bottom: 14px; margin-bottom: 18px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; } h1 span { color: #58a6ff; }
+  .tag { color: #8b949e; font-size: .85rem; }
+  .card { background: #101a2b; border: 1px solid #1f2a3a; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+  label { font-size: .8rem; color: #8b949e; display: block; margin: 8px 0 2px; }
+  select, input { background: #0b1220; border: 1px solid #2a3a52; color: #e6edf3; border-radius: 8px; padding: 8px 10px; font-size: 1rem; width: 100%; }
+  .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  button { margin-top: 12px; background: #2563eb; color: #fff; border: 0; border-radius: 8px; padding: 10px 16px; font-size: 1rem; cursor: pointer; width: 100%; }
+  button:disabled { opacity: .5; cursor: wait; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin-top: 8px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid #1f2a3a; }
+  th { color: #8b949e; font-weight: 600; font-size: .75rem; text-transform: uppercase; }
+  .best { color: #3fb950; font-weight: 700; }
+  .warn { font-size: .78rem; color: #d29922; margin-top: 6px; }
+  .muted { color: #8b949e; font-size: .85rem; }
+  .pill { display:inline-block; border:1px solid #2a3a52; border-radius:999px; padding:2px 10px; font-size:.72rem; color:#8b949e; margin-right:6px; }
+  .cta { display:block; text-align:center; background:#238636; color:#fff; border-radius:8px; padding:10px; text-decoration:none; font-weight:600; margin-top:10px; }
+  .cta.blue { background:#2563eb; }
+  .arch a { color: #58a6ff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Route<span>Opt</span> — cheaper cross-chain routes</h1>
+    <div class="tag">Compares public quote APIs (LI.FI, Across) + prices/TVL (DeFiLlama). Estimates only. No custody. No execution. Not financial advice.</div>
+  </header>
+
+  <div class="card">
+    <b>Live checker</b> <span class="muted">— quotes fetched in your browser, right now, from the public APIs</span>
+    <div class="row">
+      <div><label for="from">From chain</label>
+        <select id="from">
+          <option value="1">Ethereum</option><option value="8453">Base</option>
+          <option value="42161">Arbitrum</option><option value="10">Optimism</option>
+        </select></div>
+      <div><label for="to">To chain</label>
+        <select id="to"><option value="42161">Arbitrum</option><option value="1">Ethereum</option>
+          <option value="8453">Base</option><option value="10">Optimism</option></select></div>
+      <div><label for="amt">Amount (USDC)</label>
+        <input id="amt" type="number" value="1000" min="1" step="any"></div>
+    </div>
+    <button id="go" onclick="check()">Compare routes now</button>
+    <div id="out"></div>
+  </div>
+
+  <div class="card">
+    <b>Today's published snapshot</b> <span class="muted" id="snap-ts"></span>
+    <div id="snap"></div>
+  </div>
+
+  <div class="card">
+    <b>Alerts+</b> — paid tier
+    <div class="muted" style="margin-top:6px">High-frequency checks (every 15 min, 20+ corridors), private Telegram alerts when the cheapest-vs-worst provider spread exceeds your threshold, corridor mispricing digest. $9/mo, cancel anytime.</div>
+    <a class="cta" href="#" id="ctaLink">Subscribe to RouteOpt Alerts+</a>
+  </div>
+
+  <div class="card">
+    <b>Move funds</b> <span class="muted">(affiliate/referral links — never change your cost)</span>
+    <div style="margin-top:8px">
+      <span class="pill" id="affLifi">LI.FI</span><span class="pill" id="affAcross">Across</span>
+      <div class="muted" style="margin-top:6px">RouteOpt never touches your funds. You transact on the provider's own site.</div>
+    </div>
+  </div>
+
+  <div class="card arch">
+    <b>Daily archive</b> — free examples published every day: <a href="archive/">archive/</a>.
+    <div class="muted">Full methodology, data sources and disclaimers in the <a href="https://github.com/jonathanngiroux-star/routeopt#readme" style="color:#58a6ff">README</a>.</div>
+  </div>
+
+  <div class="warn">⚠️ Estimates from public APIs at a moment in time. Rates move. Slippage, capacity caps and route availability change. Always verify the final quote in your wallet before signing. Nothing here is financial advice.</div>
+</div>
+
+<script id="snapshot" type="application/json">{"comp":{"generated_at":1792332628,"results":[{"id":"usdc-eth-arb","label":"1,000 USDC: Ethereum \u2192 Arbitrum","from_amount":"1000","token":"USDC","price_used":0.9996630211463454,"options":[{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"999891468","seconds":2,"source":"across.to public API","quote_url":"https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=42161","fee_breakdown":{"capitalFeeTotal":"100000","relayGasFeeTotal":"8532"},"is_amount_too_low":false,"to_amount_display":"999.89","to_token":"USDC","from_usd":999.66,"to_usd":999.55,"cost_usd":0.1085,"cost_bps":1.09,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},{"provider":"lifi","provider_name":"LI.FI (aggregated)","tool":"AcrossV4","to_amount_raw":"997391364","seconds":2,"source":"li.quest public API","quote_url":"https://li.fi/?fromChain=1&toChain=42161&fromToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&toToken=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&fromAmount=1000000000","to_amount_display":"997.39","to_token":"USDC.e","from_usd":999.66,"to_usd":997.06,"cost_usd":2.6078,"cost_bps":26.09,"risk_note":"Aggregator: route risk = the underlying bridge/DEX it picks, which varies. Check the named tool's audit history before large transfers."}],"best":{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"999891468","seconds":2,"source":"across.to public API","quote_url":"https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=42161","fee_breakdown":{"capitalFeeTotal":"100000","relayGasFeeTotal":"8532"},"is_amount_too_low":false,"to_amount_display":"999.89","to_token":"USDC","from_usd":999.66,"to_usd":999.55,"cost_usd":0.1085,"cost_bps":1.09,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},"spread_bps":24.97,"ts":1792332621},{"id":"usdc-eth-base","label":"1,000 USDC: Ethereum \u2192 Base","from_amount":"1000","token":"USDC","price_used":0.9996630211463454,"options":[{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"999895896","seconds":2,"source":"across.to public API","quote_url":"https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=8453","fee_breakdown":{"capitalFeeTotal":"100000","relayGasFeeTotal":"4104"},"is_amount_too_low":false,"to_amount_display":"999.89","to_token":"USDC","from_usd":999.66,"to_usd":999.56,"cost_usd":0.1041,"cost_bps":1.04,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},{"provider":"lifi","provider_name":"LI.FI (aggregated)","tool":"Polymer (Standard)","to_amount_raw":"997500000","seconds":1080,"source":"li.quest public API","quote_url":"https://li.fi/?fromChain=1&toChain=8453&fromToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&toToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&fromAmount=1000000000","to_amount_display":"997.50","to_token":"USDC","from_usd":999.66,"to_usd":997.16,"cost_usd":2.4992,"cost_bps":25.0,"risk_note":"Aggregator route via Polymer (interoperability protocol). Newer stack \u2014 verify L2Beat/security docs before large transfers."}],"best":{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"999895896","seconds":2,"source":"across.to public API","quote_url":"https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=8453","fee_breakdown":{"capitalFeeTotal":"100000","relayGasFeeTotal":"4104"},"is_amount_too_low":false,"to_amount_display":"999.89","to_token":"USDC","from_usd":999.66,"to_usd":999.56,"cost_usd":0.1041,"cost_bps":1.04,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},"spread_bps":24.07,"ts":1792332623},{"id":"weth-base-eth","label":"0.5 WETH: Base \u2192 Ethereum","from_amount":"0.5","token":"WETH","price_used":2387.4762488417523,"options":[{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"499849510516567334","seconds":8,"source":"across.to public API","quote_url":"https://across.to/?token=0x4200000000000000000000000000000000000006&fromChain=8453&toChain=1","fee_breakdown":{"capitalFeeTotal":"41250000000001","relayGasFeeTotal":"27975901685043"},"is_amount_too_low":false,"to_amount_display":"0.4998","to_token":"WETH","from_usd":1193.74,"to_usd":1193.38,"cost_usd":0.3593,"cost_bps":3.01,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},{"provider":"lifi","provider_name":"LI.FI (aggregated)","tool":"LI.FI Intents","to_amount_raw":"498696887853514099","seconds":28,"source":"li.quest public API","quote_url":"https://li.fi/?fromChain=8453&toChain=1&fromToken=0x4200000000000000000000000000000000000006&toToken=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&fromAmount=500000000000000000","to_amount_display":"0.4986","to_token":"WETH","from_usd":1193.74,"to_usd":1190.63,"cost_usd":3.1111,"cost_bps":26.06,"risk_note":"Aggregator: route risk = the underlying bridge/DEX it picks, which varies. Check the named tool's audit history before large transfers."}],"best":{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"499849510516567334","seconds":8,"source":"across.to public API","quote_url":"https://across.to/?token=0x4200000000000000000000000000000000000006&fromChain=8453&toChain=1","fee_breakdown":{"capitalFeeTotal":"41250000000001","relayGasFeeTotal":"27975901685043"},"is_amount_too_low":false,"to_amount_display":"0.4998","to_token":"WETH","from_usd":1193.74,"to_usd":1193.38,"cost_usd":0.3593,"cost_bps":3.01,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},"spread_bps":23.1,"ts":1792332626},{"id":"usdc-arb-base","label":"1,000 USDC: Arbitrum \u2192 Base","from_amount":"1000","token":"USDC","price_used":0.9996630211463454,"options":[{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"999895896","seconds":1,"source":"across.to public API","quote_url":"https://across.to/?token=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&fromChain=42161&toChain=8453","fee_breakdown":{"capitalFeeTotal":"100000","relayGasFeeTotal":"4104"},"is_amount_too_low":false,"to_amount_display":"999.89","to_token":"USDC","from_usd":999.66,"to_usd":999.56,"cost_usd":0.1041,"cost_bps":1.04,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},{"provider":"lifi","provider_name":"LI.FI (aggregated)","tool":"Polymer (Standard)","to_amount_raw":"997500000","seconds":1080,"source":"li.quest public API","quote_url":"https://li.fi/?fromChain=42161&toChain=8453&fromToken=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&toToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&fromAmount=1000000000","to_amount_display":"997.50","to_token":"USDC","from_usd":999.66,"to_usd":997.16,"cost_usd":2.4992,"cost_bps":25.0,"risk_note":"Aggregator route via Polymer (interoperability protocol). Newer stack \u2014 verify L2Beat/security docs before large transfers."}],"best":{"provider":"across","provider_name":"Across (intent bridge)","tool":"Across V2","to_amount_raw":"999895896","seconds":1,"source":"across.to public API","quote_url":"https://across.to/?token=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&fromChain=42161&toChain=8453","fee_breakdown":{"capitalFeeTotal":"100000","relayGasFeeTotal":"4104"},"is_amount_too_low":false,"to_amount_display":"999.89","to_token":"USDC","from_usd":999.66,"to_usd":999.56,"cost_usd":0.1041,"cost_bps":1.04,"risk_note":"Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."},"spread_bps":24.07,"ts":1792332628}],"errors":[]},"tvl":{"Across":17430408.0}}</script>
+<script>
+const TOKENS = {
+  "1":     {"USDC": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"},
+  "42161": {"USDC": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", "USDC.e": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"},
+  "8453":  {"USDC": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"},
+  "10":    {"USDC": "0x7f5c7646bc4c5f0e1b4a4c9e0f8d5c5b2e1a3b4c"}
+};
+const CHAIN = {"1":"Ethereum","10":"Optimism","42161":"Arbitrum","8453":"Base"};
+
+function fmt(n) { return n.toLocaleString("en-US", {maximumFractionDigits: 2}); }
+function bps(a, b) { return ((b - a) / b * 10000).toFixed(1); }
+
+async function check() {
+  const from = document.getElementById("from").value, to = document.getElementById("to").value;
+  const amt = parseFloat(document.getElementById("amt").value);
+  const out = document.getElementById("out"), btn = document.getElementById("go");
+  if (from === to) { out.innerHTML = "<p class='warn'>Pick two different chains.</p>"; return; }
+  if (!(amt > 0) || amt > 1e9) { out.innerHTML = "<p class='warn'>Enter an amount between 0 and 1e9 USDC.</p>"; return; }
+  btn.disabled = true; out.innerHTML = "<p class='muted'>Fetching live public quotes…</p>";
+  const raw = BigInt(Math.round(amt * 1e6)).toString();
+  const results = [];
+  const jobs = [];
+  // Across
+  jobs.push(fetch(`https://app.across.to/api/suggested-fees?token=${TOKENS[from].USDC}&destinationChainId=${to}&originChainId=${from}&amount=${raw}`)
+    .then(r => r.json()).then(j => {
+      const fee = Number(BigInt(j.relayFeeTotal)), rcv = amt - fee / 1e6;
+      results.push({name: "Across (intent bridge)", rcv: rcv, sec: j.estimatedFillTimeSec, url: `https://across.to`});
+    }).catch(() => {}));
+  // LI.FI (to native USDC when known, else bridged variant on ARB)
+  jobs.push((async () => {
+    let toTok = TOKENS[to] && TOKENS[to].USDC;
+    if (to === "42161") toTok = TOKENS["42161"].USDC;
+    const u = `https://li.quest/v1/quote?fromChain=${from}&fromToken=${TOKENS[from].USDC}&toChain=${to}&toToken=${toTok}&fromAmount=${raw}&fromAddress=0x000000000000000000000000000000000000dEaD&integrator=routeopt`;
+    const r = await fetch(u);
+    if (!r.ok) return;
+    const j = await r.json();
+    results.push({name: "LI.FI (via " + (j.toolDetails ? j.toolDetails.name : "aggregated") + ")",
+                  rcv: Number(j.estimate.toAmount) / 1e6, sec: j.estimate.executionDuration, url: "https://li.fi"});
+  })().catch(() => {}));
+  await Promise.allSettled(jobs);
+  if (!results.length) { out.innerHTML = "<p class='warn'>No provider returned a quote for this corridor right now.</p>"; btn.disabled = false; return; }
+  results.sort((a, b) => b.rcv - a.rcv);
+  const best = results[0];
+  let html = "<table><tr><th>Provider</th><th>You receive (USDC)</th><th>Cost vs best</th><th>Time</th></tr>";
+  results.forEach(r => {
+    const cost = r === best ? "" : `${fmt(best.rcv - r.rcv)} USDC (${bps(r.rcv, best.rcv)} bps worse)`;
+    html += `<tr><td>${r === best ? "<span class='best'>★ " : ""}${r.name}${r === best ? "</span>" : ""}</td><td>${fmt(r.rcv)}</td><td>${cost}</td><td>${r.sec && r.sec <= 150 ? "~" + Math.max(1, r.sec) + "s" : r.sec ? "~" + Math.round(r.sec / 60) + " min" : "varies"}</td></tr>`;
+  });
+  html += "</table>";
+  if (results.length > 1) html += `<p class='muted'>Spread between best and worst: ${bps(results[results.length-1].rcv, best.rcv)} bps. On $${fmt(amt)}, choosing the right provider saves $${fmt(best.rcv - results[results.length-1].rcv)}.</p>`;
+  html += `<p class='muted'>Cheapest: <b>${best.name}</b> — open it: <a style="color:#58a6ff" href="${best.url}" target="_blank" rel="noopener">${best.url.replace("https://","")}</a> (verify the final quote there before signing).</p>`;
+  out.innerHTML = html;
+  btn.disabled = false;
+}
+
+// Render published snapshot
+(function () {
+  let snap = null;
+  try { snap = JSON.parse(document.getElementById("snapshot").textContent); } catch (e) { return; }
+  document.getElementById("snap-ts").textContent = "— generated " + new Date(snap.comp.generated_at * 1000).toISOString().slice(0,16).replace("T"," ") + " UTC";
+  let html = "";
+  snap.comp.results.forEach(r => {
+    html += `<div style="margin-top:10px"><b>${r.label}</b><table><tr><th>Provider</th><th>Receive</th><th>Cost</th><th>Time</th></tr>`;
+    r.options.forEach(o => {
+      html += `<tr><td>${o === r.best ? "<span class='best'>★ " : ""}${o.provider_name}${o === r.best ? "</span>" : ""}</td><td>${o.to_amount_display} ${o.to_token}</td><td>$${o.cost_usd.toFixed(2)} (${o.cost_bps} bps)</td><td>${o.seconds ? (o.seconds <= 150 ? "~" + o.seconds + "s" : "~" + Math.round(o.seconds / 60) + " min") : "varies"}</td></tr>`;
+    });
+    html += "</table>";
+    if (r.spread_bps != null) html += `<div class="muted">Provider spread: ${r.spread_bps} bps</div></div>`;
+  });
+  document.getElementById("snap").innerHTML = html;
+  if (snap.tvl) document.getElementById("snap").innerHTML += "<div class='muted' style='margin-top:8px'>Bridge TVL (DeFiLlama): " + Object.entries(snap.tvl).map(([k, v]) => k + " $" + Math.round(v).toLocaleString()).join(", ") + "</div>";
+  const mon = snap.monetization;
+  if (!mon) return;
+  const cta = document.getElementById("ctaLink");
+  if (mon.paid_tier && mon.paid_tier.link) cta.href = mon.paid_tier.link;
+  const aff = mon.affiliate_links || {};
+  if (aff.lifi) document.getElementById("affLifi").outerHTML = `<a class="cta blue" style="margin-top:10px" href="${aff.lifi}" target="_blank" rel="noopener">Route via LI.FI →</a>`;
+  if (aff.across) document.getElementById("affAcross").outerHTML = `<a class="cta" style="margin-top:10px" href="${aff.across}" target="_blank" rel="noopener">Route via Across →</a>`;
+})();
+</script>
+</body>
+</html>
