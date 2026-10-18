@@ -2,9 +2,9 @@
 """
 RouteOpt daily publisher.
 1. Runs the comparison basket (live public quotes).
-2. Writes site/latest.json (machine-readable snapshot).
-3. Writes site/archive/YYYY-MM-DD.md (daily digest, free public examples).
-4. Regenerates site/index.html with today's snapshot embedded (works offline,
+2. Writes docs/latest.json (machine-readable snapshot).
+3. Writes docs/archive/YYYY-MM-DD.md (daily digest, free public examples).
+4. Regenerates docs/index.html with today's snapshot embedded (works offline,
    refreshes live client-side when the visitor interacts).
 5. Optionally posts the digest to a Telegram channel if TELEGRAM_BOT_TOKEN
    and TELEGRAM_CHANNEL are set (never required).
@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import routeopt_core as R  # noqa: E402
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.join(BASE, "site")
+SITE = os.path.join(BASE, "docs")
 
 
 def publish(quiet=False):

@@ -118,7 +118,7 @@ def handle(msg):
             return
         send(chat, fmt_check(amount, from_c, to_c))
     elif low.startswith("/routes"):
-        site = os.path.join(os.path.dirname(os.path.abspath(__file__)), "site", "latest.json")
+        site = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "latest.json")
         try:
             with open(site) as f:
                 snap = json.load(f)

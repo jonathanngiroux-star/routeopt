@@ -1,6 +1,6 @@
 # RouteOpt — cheaper cross-chain routes, from public data
 
-**Live site:** https://jonathanngiroux-star.github.io/routeopt/ • Daily free examples: [`site/archive/`](site/archive/)
+**Live site:** https://jonathanngiroux-star.github.io/routeopt/ • Daily free examples: [`docs/archive/`](docs/archive/)
 
 RouteOpt compares cross-chain transfer routes across public bridge/DEX quote APIs
 and shows the cheapest option with cost, speed, and risk trade-offs.
@@ -10,9 +10,9 @@ and shows the cheapest option with cost, speed, and risk trade-offs.
 | Piece | What it does | Cost |
 |---|---|---|
 | `routeopt_core.py` | Quote engine: LI.FI (aggregated) vs Across (intent bridge), prices/TVL via DeFiLlama | $0 — public APIs, no key |
-| `daily_publish.py` | Daily snapshot → `site/latest.json`, `site/archive/YYYY-MM-DD.md`, regenerates `index.html`; optional Telegram channel cross-post | $0 |
+| `daily_publish.py` | Daily snapshot → `docs/latest.json`, `docs/archive/YYYY-MM-DD.md`, regenerates `index.html`; optional Telegram channel cross-post | $0 |
 | `telegram_bot.py` | Public `/check <amount> <from> <to>` bot — live quotes in chat | $0 — long polling, stdlib only |
-| `site/index.html` | Static checker + published snapshots, hosted free on GitHub Pages | $0 |
+| `docs/index.html` | Static checker + published snapshots, hosted free on GitHub Pages | $0 |
 
 Data sources: [LI.FI public API](https://li.quest/v1) (routes/quotes),
 [Across public suggested-fees API](https://app.across.to/api), [DeFiLlama](https://defillama.com)
