@@ -1,49 +1,49 @@
 {
  "comp": {
-  "generated_at": 1792332817,
+  "generated_at": 1792333255,
   "results": [
    {
     "id": "usdc-eth-arb",
     "label": "1,000 USDC: Ethereum \u2192 Arbitrum",
     "from_amount": "1000",
     "token": "USDC",
-    "price_used": 0.9996630211463454,
+    "price_used": 0.9996825871075683,
     "options": [
      {
       "provider": "across",
       "provider_name": "Across (intent bridge)",
       "tool": "Across V2",
-      "to_amount_raw": "999891454",
+      "to_amount_raw": "999891401",
       "seconds": 2,
       "source": "across.to public API",
       "quote_url": "https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=42161",
       "fee_breakdown": {
        "capitalFeeTotal": "100000",
-       "relayGasFeeTotal": "8546"
+       "relayGasFeeTotal": "8599"
       },
       "is_amount_too_low": false,
       "to_amount_display": "999.89",
       "to_token": "USDC",
-      "from_usd": 999.66,
-      "to_usd": 999.55,
-      "cost_usd": 0.1085,
+      "from_usd": 999.68,
+      "to_usd": 999.57,
+      "cost_usd": 0.1086,
       "cost_bps": 1.09,
       "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
      },
      {
       "provider": "lifi",
       "provider_name": "LI.FI (aggregated)",
-      "tool": "LI.FI Intents",
-      "to_amount_raw": "997488313",
-      "seconds": 19,
+      "tool": "Arbitrum Bridge",
+      "to_amount_raw": "997500000",
+      "seconds": 586,
       "source": "li.quest public API",
       "quote_url": "https://li.fi/?fromChain=1&toChain=42161&fromToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&toToken=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&fromAmount=1000000000",
-      "to_amount_display": "997.48",
+      "to_amount_display": "997.50",
       "to_token": "USDC.e",
-      "from_usd": 999.66,
-      "to_usd": 997.15,
-      "cost_usd": 2.5108,
-      "cost_bps": 25.12,
+      "from_usd": 999.68,
+      "to_usd": 997.18,
+      "cost_usd": 2.4992,
+      "cost_bps": 25.0,
       "risk_note": "Aggregator: route risk = the underlying bridge/DEX it picks, which varies. Check the named tool's audit history before large transfers."
      }
     ],
@@ -51,50 +51,50 @@
      "provider": "across",
      "provider_name": "Across (intent bridge)",
      "tool": "Across V2",
-     "to_amount_raw": "999891454",
+     "to_amount_raw": "999891401",
      "seconds": 2,
      "source": "across.to public API",
      "quote_url": "https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=42161",
      "fee_breakdown": {
       "capitalFeeTotal": "100000",
-      "relayGasFeeTotal": "8546"
+      "relayGasFeeTotal": "8599"
      },
      "is_amount_too_low": false,
      "to_amount_display": "999.89",
      "to_token": "USDC",
-     "from_usd": 999.66,
-     "to_usd": 999.55,
-     "cost_usd": 0.1085,
+     "from_usd": 999.68,
+     "to_usd": 999.57,
+     "cost_usd": 0.1086,
      "cost_bps": 1.09,
      "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
     },
-    "spread_bps": 24.07,
-    "ts": 1792332811
+    "spread_bps": 23.97,
+    "ts": 1792333248
    },
    {
     "id": "usdc-eth-base",
     "label": "1,000 USDC: Ethereum \u2192 Base",
     "from_amount": "1000",
     "token": "USDC",
-    "price_used": 0.9996630211463454,
+    "price_used": 0.9996825871075683,
     "options": [
      {
       "provider": "across",
       "provider_name": "Across (intent bridge)",
       "tool": "Across V2",
-      "to_amount_raw": "999895893",
+      "to_amount_raw": "999895899",
       "seconds": 2,
       "source": "across.to public API",
       "quote_url": "https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=8453",
       "fee_breakdown": {
        "capitalFeeTotal": "100000",
-       "relayGasFeeTotal": "4107"
+       "relayGasFeeTotal": "4101"
       },
       "is_amount_too_low": false,
       "to_amount_display": "999.89",
       "to_token": "USDC",
-      "from_usd": 999.66,
-      "to_usd": 999.56,
+      "from_usd": 999.68,
+      "to_usd": 999.58,
       "cost_usd": 0.1041,
       "cost_bps": 1.04,
       "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
@@ -109,8 +109,8 @@
       "quote_url": "https://li.fi/?fromChain=1&toChain=8453&fromToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&toToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&fromAmount=1000000000",
       "to_amount_display": "997.50",
       "to_token": "USDC",
-      "from_usd": 999.66,
-      "to_usd": 997.16,
+      "from_usd": 999.68,
+      "to_usd": 997.18,
       "cost_usd": 2.4992,
       "cost_bps": 25.0,
       "risk_note": "Aggregator route via Polymer (interoperability protocol). Newer stack \u2014 verify L2Beat/security docs before large transfers."
@@ -120,68 +120,68 @@
      "provider": "across",
      "provider_name": "Across (intent bridge)",
      "tool": "Across V2",
-     "to_amount_raw": "999895893",
+     "to_amount_raw": "999895899",
      "seconds": 2,
      "source": "across.to public API",
      "quote_url": "https://across.to/?token=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&fromChain=1&toChain=8453",
      "fee_breakdown": {
       "capitalFeeTotal": "100000",
-      "relayGasFeeTotal": "4107"
+      "relayGasFeeTotal": "4101"
      },
      "is_amount_too_low": false,
      "to_amount_display": "999.89",
      "to_token": "USDC",
-     "from_usd": 999.66,
-     "to_usd": 999.56,
+     "from_usd": 999.68,
+     "to_usd": 999.58,
      "cost_usd": 0.1041,
      "cost_bps": 1.04,
      "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
     },
     "spread_bps": 24.07,
-    "ts": 1792332813
+    "ts": 1792333251
    },
    {
     "id": "weth-base-eth",
     "label": "0.5 WETH: Base \u2192 Ethereum",
     "from_amount": "0.5",
     "token": "WETH",
-    "price_used": 2387.4762488417523,
+    "price_used": 2385.9815567682695,
     "options": [
      {
       "provider": "across",
       "provider_name": "Across (intent bridge)",
       "tool": "Across V2",
-      "to_amount_raw": "499856389916397358",
+      "to_amount_raw": "499859728730682388",
       "seconds": 8,
       "source": "across.to public API",
       "quote_url": "https://across.to/?token=0x4200000000000000000000000000000000000006&fromChain=8453&toChain=1",
       "fee_breakdown": {
        "capitalFeeTotal": "41250000000001",
-       "relayGasFeeTotal": "21096501855019"
+       "relayGasFeeTotal": "17757687569989"
       },
       "is_amount_too_low": false,
       "to_amount_display": "0.4998",
       "to_token": "WETH",
-      "from_usd": 1193.74,
-      "to_usd": 1193.4,
-      "cost_usd": 0.3429,
-      "cost_bps": 2.87,
+      "from_usd": 1192.99,
+      "to_usd": 1192.66,
+      "cost_usd": 0.3347,
+      "cost_bps": 2.81,
       "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
      },
      {
       "provider": "lifi",
       "provider_name": "LI.FI (aggregated)",
       "tool": "LI.FI Intents",
-      "to_amount_raw": "498702723278928726",
+      "to_amount_raw": "498694264117392160",
       "seconds": 28,
       "source": "li.quest public API",
       "quote_url": "https://li.fi/?fromChain=8453&toChain=1&fromToken=0x4200000000000000000000000000000000000006&toToken=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&fromAmount=500000000000000000",
-      "to_amount_display": "0.4987",
+      "to_amount_display": "0.4986",
       "to_token": "WETH",
-      "from_usd": 1193.74,
-      "to_usd": 1190.64,
-      "cost_usd": 3.0972,
-      "cost_bps": 25.95,
+      "from_usd": 1192.99,
+      "to_usd": 1189.88,
+      "cost_usd": 3.1155,
+      "cost_bps": 26.11,
       "risk_note": "Aggregator: route risk = the underlying bridge/DEX it picks, which varies. Check the named tool's audit history before large transfers."
      }
     ],
@@ -189,50 +189,50 @@
      "provider": "across",
      "provider_name": "Across (intent bridge)",
      "tool": "Across V2",
-     "to_amount_raw": "499856389916397358",
+     "to_amount_raw": "499859728730682388",
      "seconds": 8,
      "source": "across.to public API",
      "quote_url": "https://across.to/?token=0x4200000000000000000000000000000000000006&fromChain=8453&toChain=1",
      "fee_breakdown": {
       "capitalFeeTotal": "41250000000001",
-      "relayGasFeeTotal": "21096501855019"
+      "relayGasFeeTotal": "17757687569989"
      },
      "is_amount_too_low": false,
      "to_amount_display": "0.4998",
      "to_token": "WETH",
-     "from_usd": 1193.74,
-     "to_usd": 1193.4,
-     "cost_usd": 0.3429,
-     "cost_bps": 2.87,
+     "from_usd": 1192.99,
+     "to_usd": 1192.66,
+     "cost_usd": 0.3347,
+     "cost_bps": 2.81,
      "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
     },
-    "spread_bps": 23.18,
-    "ts": 1792332815
+    "spread_bps": 23.36,
+    "ts": 1792333253
    },
    {
     "id": "usdc-arb-base",
     "label": "1,000 USDC: Arbitrum \u2192 Base",
     "from_amount": "1000",
     "token": "USDC",
-    "price_used": 0.9996630211463454,
+    "price_used": 0.9996825871075683,
     "options": [
      {
       "provider": "across",
       "provider_name": "Across (intent bridge)",
       "tool": "Across V2",
-      "to_amount_raw": "999895892",
+      "to_amount_raw": "999895899",
       "seconds": 1,
       "source": "across.to public API",
       "quote_url": "https://across.to/?token=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&fromChain=42161&toChain=8453",
       "fee_breakdown": {
        "capitalFeeTotal": "100000",
-       "relayGasFeeTotal": "4108"
+       "relayGasFeeTotal": "4101"
       },
       "is_amount_too_low": false,
       "to_amount_display": "999.89",
       "to_token": "USDC",
-      "from_usd": 999.66,
-      "to_usd": 999.56,
+      "from_usd": 999.68,
+      "to_usd": 999.58,
       "cost_usd": 0.1041,
       "cost_bps": 1.04,
       "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
@@ -247,8 +247,8 @@
       "quote_url": "https://li.fi/?fromChain=42161&toChain=8453&fromToken=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&toToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&fromAmount=1000000000",
       "to_amount_display": "997.50",
       "to_token": "USDC",
-      "from_usd": 999.66,
-      "to_usd": 997.16,
+      "from_usd": 999.68,
+      "to_usd": 997.18,
       "cost_usd": 2.4992,
       "cost_bps": 25.0,
       "risk_note": "Aggregator route via Polymer (interoperability protocol). Newer stack \u2014 verify L2Beat/security docs before large transfers."
@@ -258,31 +258,31 @@
      "provider": "across",
      "provider_name": "Across (intent bridge)",
      "tool": "Across V2",
-     "to_amount_raw": "999895892",
+     "to_amount_raw": "999895899",
      "seconds": 1,
      "source": "across.to public API",
      "quote_url": "https://across.to/?token=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&fromChain=42161&toChain=8453",
      "fee_breakdown": {
       "capitalFeeTotal": "100000",
-      "relayGasFeeTotal": "4108"
+      "relayGasFeeTotal": "4101"
      },
      "is_amount_too_low": false,
      "to_amount_display": "999.89",
      "to_token": "USDC",
-     "from_usd": 999.66,
-     "to_usd": 999.56,
+     "from_usd": 999.68,
+     "to_usd": 999.58,
      "cost_usd": 0.1041,
      "cost_bps": 1.04,
      "risk_note": "Intent-based bridge; audited contracts, competitive relayer marketplace. Funds held in pooled vaults during transit (~minutes)."
     },
     "spread_bps": 24.07,
-    "ts": 1792332817
+    "ts": 1792333255
    }
   ],
   "errors": []
  },
  "tvl": {
-  "Across": 17430408.0
+  "Across": 17434239.0
  },
  "monetization": {
   "lifi_integrator": "routeopt",
@@ -307,5 +307,5 @@
   },
   "disclaimer": "RouteOpt compares public route data. No custody, no execution, estimates only."
  },
- "generated_at": 1792332817
+ "generated_at": 1792333255
 }

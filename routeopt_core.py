@@ -236,6 +236,8 @@ def compare_pair(pair, prices=None):
         worst = options[-1]
         if worst["to_usd"] > 0:
             spread_bps = round((best["to_usd"] - worst["to_usd"]) / worst["to_usd"] * 10000, 2)
+    elif len(options) == 1:
+        best = options[0]
     return {
         "id": pair.id, "label": pair.label, "from_amount": str(from_amount),
         "token": pair.token_name, "price_used": price,
